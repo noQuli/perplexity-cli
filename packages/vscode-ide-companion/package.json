@@ -1,0 +1,146 @@
+{
+  "name": "perplexity-cli-vscode-ide-companion",
+  "displayName": "Perplexity CLI Companion",
+  "description": "Enable Perplexity CLI with direct access to your IDE workspace.",
+  "version": "0.1.0",
+  "publisher": "perplexity",
+  "icon": "assets/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NoQuli/perplexity-cli.git",
+    "directory": "packages/vscode-ide-companion"
+  },
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "license": "Apache-2.0",
+  "preview": true,
+  "categories": [
+    "AI"
+  ],
+  "keywords": [
+    "perplexity-cli",
+    "perplexity cli",
+    "perplexity",
+    "sonar",
+    "cli",
+    "ide integration",
+    "ide companion"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Perplexity CLI",
+      "properties": {
+        "perplexity-cli.debug.logging.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable detailed logging for debugging the Perplexity CLI Companion."
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "perplexity-diff-editable"
+      }
+    ],
+    "commands": [
+      {
+        "command": "perplexity.diff.accept",
+        "title": "Perplexity CLI: Accept Diff",
+        "icon": "$(check)"
+      },
+      {
+        "command": "perplexity.diff.cancel",
+        "title": "Perplexity CLI: Close Diff Editor",
+        "icon": "$(close)"
+      },
+      {
+        "command": "perplexity-cli.runPerplexityCLI",
+        "title": "Perplexity CLI: Run"
+      },
+      {
+        "command": "perplexity-cli.showNotices",
+        "title": "Perplexity CLI: View Third-Party Notices"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "perplexity.diff.accept",
+          "when": "perplexity.diff.isVisible"
+        },
+        {
+          "command": "perplexity.diff.cancel",
+          "when": "perplexity.diff.isVisible"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "perplexity.diff.accept",
+          "when": "perplexity.diff.isVisible",
+          "group": "navigation"
+        },
+        {
+          "command": "perplexity.diff.cancel",
+          "when": "perplexity.diff.isVisible",
+          "group": "navigation"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "perplexity.diff.accept",
+        "key": "ctrl+s",
+        "when": "perplexity.diff.isVisible"
+      },
+      {
+        "command": "perplexity.diff.accept",
+        "key": "cmd+s",
+        "when": "perplexity.diff.isVisible"
+      }
+    ]
+  },
+  "main": "./dist/extension.cjs",
+  "type": "module",
+  "scripts": {
+    "prepackage": "npm run generate:notices && npm run check-types && npm run lint && npm run build:prod",
+    "build": "npm run build:dev",
+    "build:dev": "npm run check-types && npm run lint && node esbuild.js",
+    "build:prod": "node esbuild.js --production",
+    "generate:notices": "node ./scripts/generate-notices.js",
+    "prepare": "npm run generate:notices",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "watch": "npm-run-all2 -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "vsce package --no-dependencies",
+    "test": "vitest run",
+    "test:ci": "vitest run --coverage",
+    "validate:notices": "node ./scripts/validate-notices.js"
+  },
+  "devDependencies": {
+    "@perplexity-cli/perplexity-cli-core": "*",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^20.19.27",
+    "@types/vscode": "^1.107.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "@vscode/vsce": "^3.7.1",
+    "esbuild": "^0.25.12",
+    "eslint": "^9.39.2",
+    "npm-run-all2": "^8.0.4",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "zod": "^3.25.76"
+  }
+}

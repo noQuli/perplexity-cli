@@ -1,0 +1,75 @@
+{
+  "name": "@perplexity-cli/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for programmatic access to perplexity-cli",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "vitest run",
+    "test:ci": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src test",
+    "lint:fix": "eslint src test --fix",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "perplexity",
+    "perplexity-cli",
+    "ai",
+    "code-assistant",
+    "sdk",
+    "typescript"
+  ],
+  "author": "Perplexity AI",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^20.19.27",
+    "@vitest/coverage-v8": "^3.2.4",
+    "dts-bundle-generator": "^9.5.1",
+    "esbuild": "^0.25.12",
+    "eslint": "^9.39.2",
+    "globals": "^16.5.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.0",
+    "vitest": "^3.2.4",
+    "zod": "^3.25.76"
+  },
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NoQuli/perplexity-cli.git",
+    "directory": "packages/sdk-typescript"
+  },
+  "bugs": {
+    "url": "https://github.com/NoQuli/perplexity-cli/issues"
+  },
+  "homepage": "https://github.com/NoQuli/perplexity-cli#readme"
+}

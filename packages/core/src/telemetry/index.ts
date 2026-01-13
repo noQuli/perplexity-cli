@@ -1,0 +1,101 @@
+/**
+ * @license
+ * Copyright 2025 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+export enum TelemetryTarget {
+  GCP = 'gcp',
+  LOCAL = 'local',
+  PERPLEXITY = 'perplexity',
+}
+
+const DEFAULT_TELEMETRY_TARGET = TelemetryTarget.LOCAL;
+const DEFAULT_OTLP_ENDPOINT = 'http://localhost:4317';
+
+export { DEFAULT_TELEMETRY_TARGET, DEFAULT_OTLP_ENDPOINT };
+export {
+  initializeTelemetry,
+  shutdownTelemetry,
+  isTelemetrySdkInitialized,
+} from './sdk.js';
+export {
+  resolveTelemetrySettings,
+  parseBooleanEnvFlag,
+  parseTelemetryTargetValue,
+} from './config.js';
+export {
+  logStartSession,
+  logUserPrompt,
+  logToolCall,
+  logApiRequest,
+  logApiError,
+  logApiCancel,
+  logApiResponse,
+  logFlashFallback,
+  logSlashCommand,
+  logConversationFinishedEvent,
+  logKittySequenceOverflow,
+  logChatCompression,
+  logToolOutputTruncated,
+  logExtensionEnable,
+  logExtensionInstallEvent,
+  logExtensionUninstall,
+  logRipgrepFallback,
+  logNextSpeakerCheck,
+  logAuth,
+} from './loggers.js';
+export type { SlashCommandEvent, ChatCompressionEvent } from './types.js';
+export {
+  SlashCommandStatus,
+  EndSessionEvent,
+  UserPromptEvent,
+  ApiRequestEvent,
+  ApiErrorEvent,
+  ApiResponseEvent,
+  ApiCancelEvent,
+  FlashFallbackEvent,
+  StartSessionEvent,
+  ToolCallEvent,
+  ConversationFinishedEvent,
+  KittySequenceOverflowEvent,
+  ToolOutputTruncatedEvent,
+  RipgrepFallbackEvent,
+  NextSpeakerCheckEvent,
+  AuthEvent,
+} from './types.js';
+export { makeSlashCommandEvent, makeChatCompressionEvent } from './types.js';
+export type { TelemetryEvent } from './types.js';
+export { SpanStatusCode, ValueType } from '@opentelemetry/api';
+export { SemanticAttributes } from '@opentelemetry/semantic-conventions';
+export * from './uiTelemetry.js';
+export {
+  // Core metrics functions
+  recordToolCallMetrics,
+  recordTokenUsageMetrics,
+  recordApiResponseMetrics,
+  recordApiErrorMetrics,
+  recordFileOperationMetric,
+  recordInvalidChunk,
+  recordContentRetry,
+  recordContentRetryFailure,
+  // Performance monitoring functions
+  recordStartupPerformance,
+  recordMemoryUsage,
+  recordCpuUsage,
+  recordToolQueueDepth,
+  recordToolExecutionBreakdown,
+  recordTokenEfficiency,
+  recordApiRequestBreakdown,
+  recordPerformanceScore,
+  recordPerformanceRegression,
+  recordBaselineComparison,
+  isPerformanceMonitoringActive,
+  // Performance monitoring types
+  PerformanceMetricType,
+  MemoryMetricType,
+  ToolExecutionPhase,
+  ApiRequestPhase,
+  FileOperation,
+} from './metrics.js';
+export { PerplexityLogger } from './perplexity-logger/perplexity-logger.js';

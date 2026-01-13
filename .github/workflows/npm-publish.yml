@@ -1,0 +1,55 @@
+# Simple publish workflow for Perplexity CLI
+# Run manually: npm run publish:npm
+
+name: 'Publish to npm'
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run a dry-run (no actual publish)'
+        required: true
+        type: boolean
+        default: true
+      tag:
+        description: 'npm tag (latest, beta, next)'
+        required: true
+        type: string
+        default: 'latest'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build bundle
+        run: npm run bundle
+
+      - name: Prepare package
+        run: npm run prepare:package
+
+      - name: Publish to npm
+        working-directory: dist
+        run: |
+          if [ "${{ inputs.dry_run }}" == "true" ]; then
+            npm publish --access public --tag ${{ inputs.tag }} --dry-run
+          else
+            npm publish --access public --tag ${{ inputs.tag }}
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

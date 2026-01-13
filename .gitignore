@@ -1,0 +1,56 @@
+# API keys and secrets
+.env
+.env~
+
+# perplexity-cli settings
+# We want to keep the .perplexity in the root of the repo and ignore any .perplexity
+# in subdirectories. In our root .perplexity we want to allow for version control
+# for subcommands.
+**/.perplexity/
+!/.perplexity/
+.perplexity/*
+!.perplexity/config.yaml
+!.perplexity/commands/
+
+
+# Note: .perplexity-clipboard/ is NOT in gitignore so Perplexity can access pasted images
+
+# Dependency directory
+node_modules
+bower_components
+package-lock.json
+
+# Editors
+.idea
+*.iml
+.cursor
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# TypeScript build info files
+*.tsbuildinfo
+
+# Ignore built ts files
+dist
+
+# Docker folder to help skip auth refreshes
+.docker
+
+bundle
+
+# Test report files
+junit.xml
+packages/*/coverage/
+
+# Generated files
+packages/cli/src/generated/
+packages/core/src/generated/
+.integration-tests/
+packages/vscode-ide-companion/*.vsix
+
+# Log files
+logs/
+patch_output.log
+gha-creds-*.json

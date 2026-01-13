@@ -1,0 +1,59 @@
+# Source files
+packages/
+scripts/
+integration-tests/
+docs/
+hello/
+eslint-rules/
+
+# Config files
+.github/
+.allstar/
+.aoneci/
+.gcp/
+.vscode/
+.husky/
+
+# Build configs
+tsconfig.json
+vitest.config.ts
+eslint.config.js
+esbuild.config.js
+Makefile
+Dockerfile
+
+# Editor/OS files
+.editorconfig
+.prettierrc.json
+.prettierignore
+.yamllint.yml
+.nvmrc
+.npmrc
+.gitattributes
+.gitignore
+
+# Secrets
+.env
+.env.example
+.env~
+
+# Test outputs
+junit.xml
+coverage/
+.integration-tests/
+
+# Local settings
+.perplexity/
+.gemini/
+.qwen/
+logs/
+gha-creds-*.json
+patch_output.log
+
+# Documentation
+CONTRIBUTING.md
+SECURITY.md
+CHANGELOG.md
+
+# Node modules (should never be published anyway)
+node_modules/
