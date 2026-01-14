@@ -40,7 +40,7 @@ jobs:
       name: 'production-release'
       url: '${{ github.server_url }}/${{ github.repository }}/releases/tag/sdk-typescript-${{ steps.version.outputs.RELEASE_TAG }}'
     if: |-
-      ${{ github.repository == 'PerplexityLM/perplexity-cli' }}
+      ${{ github.repository == 'NoQuli/perplexity-cli' }}
     permissions:
       contents: 'write'
       packages: 'write'
@@ -128,9 +128,9 @@ jobs:
         run: |
           npm run test:ci
         env:
-          OPENAI_API_KEY: '${{ secrets.OPENAI_API_KEY }}'
-          OPENAI_BASE_URL: '${{ secrets.OPENAI_BASE_URL }}'
-          OPENAI_MODEL: '${{ secrets.OPENAI_MODEL }}'
+          PERPLEXITY_API_KEY: '${{ secrets.PERPLEXITY_API_KEY }}'
+          PERPLEXITY_BASE_URL: '${{ secrets.PERPLEXITY_BASE_URL }}'
+          PERPLEXITY_MODEL: '${{ secrets.PERPLEXITY_MODEL }}'
 
       - name: 'Build CLI for Integration Tests'
         if: |-
@@ -146,9 +146,9 @@ jobs:
           npm run test:integration:sdk:sandbox:none
           npm run test:integration:sdk:sandbox:docker
         env:
-          OPENAI_API_KEY: '${{ secrets.OPENAI_API_KEY }}'
-          OPENAI_BASE_URL: '${{ secrets.OPENAI_BASE_URL }}'
-          OPENAI_MODEL: '${{ secrets.OPENAI_MODEL }}'
+          PERPLEXITY_API_KEY: '${{ secrets.PERPLEXITY_API_KEY }}'
+          PERPLEXITY_BASE_URL: '${{ secrets.PERPLEXITY_BASE_URL }}'
+          PERPLEXITY_MODEL: '${{ secrets.PERPLEXITY_MODEL }}'
 
       - name: 'Configure Git User'
         run: |
@@ -202,7 +202,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@perplexity'
 
-      - name: 'Publish @perplexity-cli/sdk'
+      - name: 'Publish @perplexity/sdk'
         working-directory: 'packages/sdk-typescript'
         run: |-
           npm publish --access public --tag=${{ steps.version.outputs.NPM_TAG }} ${{ steps.vars.outputs.is_dry_run == 'true' && '--dry-run' || '' }}

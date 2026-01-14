@@ -20,13 +20,17 @@ export default defineConfig({
     include: ['**/*.test.ts'],
     exclude: ['**/terminal-bench/*.test.ts', '**/node_modules/**'],
     retry: 2,
-    fileParallelism: true,
+    // Run tests sequentially to prevent memory issues
+    fileParallelism: false,
     poolOptions: {
       threads: {
-        minThreads: 2,
-        maxThreads: 4,
+        minThreads: 1,
+        maxThreads: 2,
+        useAtomics: true,
       },
     },
+    // Isolate test environments to prevent memory leaks
+    isolate: true,
   },
   resolve: {
     alias: {

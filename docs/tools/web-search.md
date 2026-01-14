@@ -59,7 +59,7 @@ Set environment variables in your shell or `.env` file:
 export TAVILY_API_KEY="tvly-xxxxx"
 
 # Google
-export GOOGLE_API_KEY="your-api-key"
+export PERPLEXITY_API_KEY="your-api-key"
 export GOOGLE_SEARCH_ENGINE_ID="your-engine-id"
 ```
 

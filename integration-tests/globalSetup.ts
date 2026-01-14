@@ -101,6 +101,12 @@ export async function setup() {
   process.env['E2E_TEST_FILE_DIR'] = sdkE2eRunDir;
   process.env['TEST_CLI_PATH'] = join(rootDir, 'dist/cli.js');
 
+  // Set a fake API key for tests if not already set
+  if (!process.env['PERPLEXITY_API_KEY']) {
+    process.env['PERPLEXITY_API_KEY'] =
+      'test-fake-api-key-for-integration-tests';
+  }
+
   if (process.env['KEEP_OUTPUT']) {
     console.log(`Keeping output for test run in: ${runDir}`);
     console.log(`Keeping output for SDK E2E test run in: ${sdkE2eRunDir}`);

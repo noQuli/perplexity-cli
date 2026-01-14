@@ -72,9 +72,9 @@ jobs:
         run: 'npm run test:terminal-bench:perplexity'
         timeout-minutes: 30
         env:
-          OPENAI_API_KEY: '${{ secrets.OPENAI_API_KEY }}'
-          OPENAI_BASE_URL: '${{ secrets.OPENAI_BASE_URL }}'
-          OPENAI_MODEL: '${{ secrets.OPENAI_MODEL }}'
+          PERPLEXITY_API_KEY: '${{ secrets.PERPLEXITY_API_KEY }}'
+          PERPLEXITY_BASE_URL: '${{ secrets.PERPLEXITY_BASE_URL }}'
+          PERPLEXITY_MODEL: '${{ secrets.PERPLEXITY_MODEL }}'
           CI: 'true'
           NODE_ENV: 'test'
           VERBOSE: 'true'

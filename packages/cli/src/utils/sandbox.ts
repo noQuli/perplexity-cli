@@ -602,14 +602,6 @@ export async function start_sandbox(
         `PERPLEXITY_API_KEY=${process.env['PERPLEXITY_API_KEY']}`,
       );
     }
-    if (process.env['GOOGLE_API_KEY']) {
-      args.push('--env', `GOOGLE_API_KEY=${process.env['GOOGLE_API_KEY']}`);
-    }
-
-    // copy OPENAI_API_KEY and related env vars for Perplexity
-    if (process.env['OPENAI_API_KEY']) {
-      args.push('--env', `OPENAI_API_KEY=${process.env['OPENAI_API_KEY']}`);
-    }
     // copy TAVILY_API_KEY for web search tool
     if (process.env['TAVILY_API_KEY']) {
       args.push('--env', `TAVILY_API_KEY=${process.env['TAVILY_API_KEY']}`);

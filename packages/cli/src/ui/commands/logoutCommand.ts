@@ -24,7 +24,6 @@ export const logoutCommand: SlashCommand = {
     try {
       // Clear the API key from environment (runtime only)
       delete process.env['PERPLEXITY_API_KEY'];
-      delete process.env['OPENAI_API_KEY'];
 
       // Clear the API key from user settings (persistent)
       const settings = context.services.settings;

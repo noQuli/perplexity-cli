@@ -104,7 +104,7 @@ describe('OpenRouterOpenAICompatibleProvider', () => {
 
       expect(headers).toEqual({
         'User-Agent': `PerplexityCode/1.0.0 (${process.platform}; ${process.arch})`,
-        'HTTP-Referer': 'https://github.com/PerplexityLM/perplexity-code.git',
+        'HTTP-Referer': 'https://github.com/NoQuli/perplexity-code.git',
         'X-Title': 'Perplexity Code',
       });
     });
@@ -124,7 +124,7 @@ describe('OpenRouterOpenAICompatibleProvider', () => {
 
       expect(headers).toEqual({
         'User-Agent': 'ParentAgent/1.0.0',
-        'HTTP-Referer': 'https://github.com/PerplexityLM/perplexity-code.git', // OpenRouter-specific value should override
+        'HTTP-Referer': 'https://github.com/NoQuli/perplexity-code.git', // OpenRouter-specific value should override
         'X-Title': 'Perplexity Code',
       });
 
@@ -140,7 +140,7 @@ describe('OpenRouterOpenAICompatibleProvider', () => {
         `PerplexityCode/unknown (${process.platform}; ${process.arch})`,
       );
       expect(headers['HTTP-Referer']).toBe(
-        'https://github.com/PerplexityLM/perplexity-code.git',
+        'https://github.com/NoQuli/perplexity-code.git',
       );
       expect(headers['X-Title']).toBe('Perplexity Code');
     });
@@ -213,7 +213,7 @@ describe('OpenRouterOpenAICompatibleProvider', () => {
       // Should have both parent and OpenRouter-specific headers
       expect(headers['User-Agent']).toBeDefined(); // From parent
       expect(headers['HTTP-Referer']).toBe(
-        'https://github.com/PerplexityLM/perplexity-code.git',
+        'https://github.com/NoQuli/perplexity-code.git',
       ); // OpenRouter-specific
       expect(headers['X-Title']).toBe('Perplexity Code'); // OpenRouter-specific
     });

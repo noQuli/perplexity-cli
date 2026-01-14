@@ -25,14 +25,14 @@ describe('validateAuthMethod', () => {
   });
 
   it('should return null for USE_OPENAI', () => {
-    process.env['OPENAI_API_KEY'] = 'fake-key';
+    process.env['PERPLEXITY_API_KEY'] = 'fake-key';
     expect(validateAuthMethod(AuthType.USE_OPENAI)).toBeNull();
   });
 
-  it('should return an error message for USE_OPENAI if OPENAI_API_KEY is not set', () => {
-    delete process.env['OPENAI_API_KEY'];
+  it('should return an error message for USE_OPENAI if PERPLEXITY_API_KEY is not set', () => {
+    delete process.env['PERPLEXITY_API_KEY'];
     expect(validateAuthMethod(AuthType.USE_OPENAI)).toBe(
-      'OPENAI_API_KEY environment variable not found. You can enter it interactively or add it to your .env file.',
+      'PERPLEXITY_API_KEY environment variable not found. You can enter it interactively or add it to your .env file.',
     );
   });
 

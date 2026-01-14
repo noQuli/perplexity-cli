@@ -390,10 +390,10 @@ export async function main() {
         ? config.getInputFormat()
         : InputFormat.TEXT;
 
-    // For stream-json mode, defer config.initialize() until after the initialize control request
-    // For other modes, initialize normally
+    // For non-interactive stream-json mode, defer config.initialize() until after the initialize control request
+    // For interactive mode or other modes, initialize normally
     let initializationResult: InitializationResult | undefined;
-    if (inputFormat !== InputFormat.STREAM_JSON) {
+    if (inputFormat !== InputFormat.STREAM_JSON || isInteractive) {
       initializationResult = await initializeApp(config, settings);
     }
 
@@ -412,7 +412,7 @@ export async function main() {
     ];
 
     // Render UI, passing necessary config values. Check that there is no command line question.
-    if (config.isInteractive()) {
+    if (isInteractive) {
       // Need kitty detection to be complete before we can start the interactive UI.
       await kittyProtocolDetectionComplete;
       await startInteractiveUI(

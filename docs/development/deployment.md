@@ -41,7 +41,7 @@ For security and isolation, Perplexity CLI can be run inside a container. This i
   You can run the published sandbox image directly. This is useful for environments where you only have Docker and want to run the CLI.
   ```bash
   # Run the published sandbox image
-  docker run --rm -it ghcr.io/perplexitylm/perplexity-cli:0.0.11
+  docker run --rm -it ghcr.io/NoQuli/perplexity-cli:0.0.11
   ```
 - **Using the `--sandbox` flag:**
   If you have Perplexity CLI installed locally (using the standard installation described above), you can instruct it to run inside the sandbox container.

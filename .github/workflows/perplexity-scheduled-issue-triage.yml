@@ -21,7 +21,7 @@ jobs:
   triage-issues:
     timeout-minutes: 10
     if: |-
-      ${{ github.repository == 'PerplexityLM/perplexity-cli' }}
+      ${{ github.repository == 'NoQuli/perplexity-cli' }}
     runs-on: 'ubuntu-latest'
     permissions:
       contents: 'read'
@@ -54,15 +54,15 @@ jobs:
       - name: 'Run Perplexity Issue Triage'
         if: |-
           ${{ steps.find_issues.outputs.issues_to_triage != '[]' }}
-        uses: 'PerplexityLM/perplexity-cli-action@5fd6818d04d64e87d255ee4d5f77995e32fbf4c2'
+        uses: 'NoQuli/perplexity-cli-action@5fd6818d04d64e87d255ee4d5f77995e32fbf4c2'
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           ISSUES_TO_TRIAGE: '${{ steps.find_issues.outputs.issues_to_triage }}'
           REPOSITORY: '${{ github.repository }}'
         with:
-          OPENAI_API_KEY: '${{ secrets.OPENAI_API_KEY }}'
-          OPENAI_BASE_URL: '${{ secrets.OPENAI_BASE_URL }}'
-          OPENAI_MODEL: '${{ secrets.OPENAI_MODEL }}'
+          PERPLEXITY_API_KEY: '${{ secrets.PERPLEXITY_API_KEY }}'
+          PERPLEXITY_BASE_URL: '${{ secrets.PERPLEXITY_BASE_URL }}'
+          PERPLEXITY_MODEL: '${{ secrets.PERPLEXITY_MODEL }}'
           settings_json: |-
             {
               "maxSessionTurns": 25,

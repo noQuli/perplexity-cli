@@ -98,7 +98,7 @@ jobs:
           echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: 'Run Perplexity PR Review'
-        uses: 'PerplexityLM/perplexity-cli-action@5fd6818d04d64e87d255ee4d5f77995e32fbf4c2'
+        uses: 'NoQuli/perplexity-cli-action@5fd6818d04d64e87d255ee4d5f77995e32fbf4c2'
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           PR_NUMBER: '${{ steps.get_pr.outputs.pr_number || steps.get_pr_comment.outputs.pr_number }}'
@@ -107,9 +107,9 @@ jobs:
           ADDITIONAL_INSTRUCTIONS: '${{ steps.get_pr.outputs.additional_instructions || steps.get_pr_comment.outputs.additional_instructions }}'
           REPOSITORY: '${{ github.repository }}'
         with:
-          OPENAI_API_KEY: '${{ secrets.OPENAI_API_KEY }}'
-          OPENAI_BASE_URL: '${{ secrets.OPENAI_BASE_URL }}'
-          OPENAI_MODEL: '${{ secrets.OPENAI_MODEL }}'
+          PERPLEXITY_API_KEY: '${{ secrets.PERPLEXITY_API_KEY }}'
+          PERPLEXITY_BASE_URL: '${{ secrets.PERPLEXITY_BASE_URL }}'
+          PERPLEXITY_MODEL: '${{ secrets.PERPLEXITY_MODEL }}'
           settings_json: |-
             {
               "coreTools": [

@@ -436,7 +436,7 @@ The CLI automatically loads environment variables from an `.env` file. The loadi
 
 **Environment Variable Exclusion:** Some environment variables (like `DEBUG` and `DEBUG_MODE`) are automatically excluded from project `.env` files by default to prevent interference with the CLI behavior. Variables from `.perplexity/.env` files are never excluded. You can customize this behavior using the `excludedProjectEnvVars` setting in your `settings.json` file.
 
-- **`OPENAI_API_KEY`**:
+- **`PERPLEXITY_API_KEY`**:
   - One of several available [authentication methods](./authentication.md).
   - Set this in your shell profile (e.g., `~/.bashrc`, `~/.zshrc`) or an `.env` file.
 - **`OPENAI_BASE_URL`**:

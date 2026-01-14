@@ -331,7 +331,7 @@ describe('Configuration Options (E2E)', () => {
           cwd: testDir,
           env: {
             // Common model-related env vars that CLI might respect
-            OPENAI_API_KEY: process.env['OPENAI_API_KEY'] || 'test-key',
+            PERPLEXITY_API_KEY: process.env['PERPLEXITY_API_KEY'] || 'test-key',
           },
           debug: true,
           stderr: (msg: string) => {

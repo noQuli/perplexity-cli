@@ -357,7 +357,7 @@ export async function parseArguments(settings: Settings): Promise<CliArgs> {
           })
           .option('openai-api-key', {
             type: 'string',
-            description: 'OpenAI API key to use for authentication',
+            description: 'Perplexity API key to use for authentication',
           })
           .option('openai-base-url', {
             type: 'string',
@@ -948,7 +948,6 @@ export async function loadCliConfig(
       apiKey:
         argv.openaiApiKey ||
         process.env['PERPLEXITY_API_KEY'] ||
-        process.env['OPENAI_API_KEY'] ||
         settings.security?.auth?.apiKey,
       baseUrl:
         argv.openaiBaseUrl ||

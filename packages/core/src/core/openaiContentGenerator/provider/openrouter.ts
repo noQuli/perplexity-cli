@@ -24,7 +24,7 @@ export class OpenRouterOpenAICompatibleProvider extends DefaultOpenAICompatibleP
     // Add OpenRouter-specific headers
     return {
       ...baseHeaders,
-      'HTTP-Referer': 'https://github.com/PerplexityLM/perplexity-code.git',
+      'HTTP-Referer': 'https://github.com/NoQuli/perplexity-code.git',
       'X-Title': 'Perplexity Code',
     };
   }

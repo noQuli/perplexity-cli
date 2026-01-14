@@ -28,11 +28,11 @@ describe('validateNonInterActiveAuth', () => {
     originalEnvPerplexityApiKey = process.env['PERPLEXITY_API_KEY'];
     originalEnvVertexAi = process.env['GOOGLE_GENAI_USE_VERTEXAI'];
     originalEnvGcp = process.env['GOOGLE_GENAI_USE_GCA'];
-    originalEnvOpenAiApiKey = process.env['OPENAI_API_KEY'];
+    originalEnvOpenAiApiKey = process.env['PERPLEXITY_API_KEY'];
     delete process.env['PERPLEXITY_API_KEY'];
     delete process.env['GOOGLE_GENAI_USE_VERTEXAI'];
     delete process.env['GOOGLE_GENAI_USE_GCA'];
-    delete process.env['OPENAI_API_KEY'];
+    delete process.env['PERPLEXITY_API_KEY'];
     consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     processExitSpy = vi.spyOn(process, 'exit').mockImplementation((code) => {
       throw new Error(`process.exit(${code}) called`);
@@ -76,9 +76,9 @@ describe('validateNonInterActiveAuth', () => {
       delete process.env['GOOGLE_GENAI_USE_GCA'];
     }
     if (originalEnvOpenAiApiKey !== undefined) {
-      process.env['OPENAI_API_KEY'] = originalEnvOpenAiApiKey;
+      process.env['PERPLEXITY_API_KEY'] = originalEnvOpenAiApiKey;
     } else {
-      delete process.env['OPENAI_API_KEY'];
+      delete process.env['PERPLEXITY_API_KEY'];
     }
     vi.restoreAllMocks();
   });
@@ -108,8 +108,8 @@ describe('validateNonInterActiveAuth', () => {
     expect(processExitSpy).toHaveBeenCalledWith(1);
   });
 
-  it('uses USE_OPENAI if OPENAI_API_KEY is set', async () => {
-    process.env['OPENAI_API_KEY'] = 'fake-openai-key';
+  it('uses USE_OPENAI if PERPLEXITY_API_KEY is set', async () => {
+    process.env['PERPLEXITY_API_KEY'] = 'fake-openai-key';
     const nonInteractiveConfig = {
       refreshAuth: refreshAuthMock,
       getOutputFormat: vi.fn().mockReturnValue(OutputFormat.TEXT),
@@ -197,7 +197,7 @@ describe('validateNonInterActiveAuth', () => {
     mockSettings.merged.security!.auth!.enforcedType = AuthType.USE_OPENAI;
     mockSettings.merged.security!.auth!.selectedType = AuthType.USE_OPENAI;
     // Set required env var for USE_OPENAI to ensure enforcedAuthType takes precedence
-    process.env['OPENAI_API_KEY'] = 'fake-key';
+    process.env['PERPLEXITY_API_KEY'] = 'fake-key';
     const nonInteractiveConfig = {
       refreshAuth: refreshAuthMock,
     } as unknown as Config;
@@ -213,7 +213,7 @@ describe('validateNonInterActiveAuth', () => {
   it('exits if currentAuthType does not match enforcedAuthType', async () => {
     mockSettings.merged.security!.auth!.enforcedType =
       AuthType.PERPLEXITY_API_KEY;
-    process.env['OPENAI_API_KEY'] = 'fake-key';
+    process.env['PERPLEXITY_API_KEY'] = 'fake-key';
     const nonInteractiveConfig = {
       refreshAuth: refreshAuthMock,
       getOutputFormat: vi.fn().mockReturnValue(OutputFormat.TEXT),
@@ -295,7 +295,7 @@ describe('validateNonInterActiveAuth', () => {
     it('emits error result and exits when enforced auth mismatches current auth', async () => {
       mockSettings.merged.security!.auth!.enforcedType =
         AuthType.PERPLEXITY_API_KEY;
-      process.env['OPENAI_API_KEY'] = 'fake-key';
+      process.env['PERPLEXITY_API_KEY'] = 'fake-key';
 
       const nonInteractiveConfig = {
         refreshAuth: refreshAuthMock,
@@ -334,7 +334,7 @@ describe('validateNonInterActiveAuth', () => {
 
     it('emits error result and exits when validateAuthMethod fails', async () => {
       vi.spyOn(auth, 'validateAuthMethod').mockReturnValue('Auth error!');
-      process.env['OPENAI_API_KEY'] = 'fake-key';
+      process.env['PERPLEXITY_API_KEY'] = 'fake-key';
 
       const nonInteractiveConfig = {
         refreshAuth: refreshAuthMock,
@@ -431,7 +431,7 @@ describe('validateNonInterActiveAuth', () => {
     it('emits error result and exits when enforced auth mismatches current auth', async () => {
       mockSettings.merged.security!.auth!.enforcedType =
         AuthType.PERPLEXITY_API_KEY;
-      process.env['OPENAI_API_KEY'] = 'fake-key';
+      process.env['PERPLEXITY_API_KEY'] = 'fake-key';
 
       const nonInteractiveConfig = {
         refreshAuth: refreshAuthMock,
@@ -471,7 +471,7 @@ describe('validateNonInterActiveAuth', () => {
 
     it('emits error result and exits when validateAuthMethod fails', async () => {
       vi.spyOn(auth, 'validateAuthMethod').mockReturnValue('Auth error!');
-      process.env['OPENAI_API_KEY'] = 'fake-key';
+      process.env['PERPLEXITY_API_KEY'] = 'fake-key';
 
       const nonInteractiveConfig = {
         refreshAuth: refreshAuthMock,

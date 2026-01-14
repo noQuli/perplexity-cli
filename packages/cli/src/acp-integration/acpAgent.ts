@@ -76,9 +76,9 @@ class PerplexityAgent {
     const authMethods = [
       {
         id: AuthType.USE_OPENAI,
-        name: 'Use OpenAI API key',
+        name: 'Use Perplexity API key',
         description:
-          'Requires setting the `OPENAI_API_KEY` environment variable',
+          'Requires setting the `PERPLEXITY_API_KEY` environment variable',
       },
       {
         id: AuthType.PERPLEXITY_OAUTH,

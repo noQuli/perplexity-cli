@@ -123,7 +123,7 @@ class VsCodeInstaller implements IdeInstaller {
         isWindows ? `"${commandPath}"` : commandPath,
         [
           '--install-extension',
-          'perplexitylm.perplexity-code-vscode-ide-companion',
+          'NoQuli.perplexity-code-vscode-ide-companion',
           '--force',
         ],
         { stdio: 'pipe', shell: isWindows },

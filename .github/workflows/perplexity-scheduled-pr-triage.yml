@@ -9,7 +9,7 @@ jobs:
   audit-prs:
     timeout-minutes: 15
     if: |-
-      ${{ github.repository == 'PerplexityLM/perplexity-cli' }}
+      ${{ github.repository == 'NoQuli/perplexity-cli' }}
     permissions:
       contents: 'read'
       id-token: 'write'

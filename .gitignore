@@ -2,27 +2,28 @@
 .env
 .env~
 
-# gemini-cli settings
-# We want to keep the .gemini in the root of the repo and ignore any .gemini
-# in subdirectories. In our root .gemini we want to allow for version control
+# perplexity-cli settings
+# We want to keep the .perplexity in the root of the repo and ignore any .perplexity
+# in subdirectories. In our root .perplexity we want to allow for version control
 # for subcommands.
 **/.perplexity/
 !/.perplexity/
 .perplexity/*
 !.perplexity/config.yaml
 !.perplexity/commands/
-!.perplexity/skills/
-!.perplexity/settings.json
 
-# Note: .gemini-clipboard/ is NOT in gitignore so Gemini can access pasted images
+
+# Note: .perplexity-clipboard/ is NOT in gitignore so Perplexity can access pasted images
 
 # Dependency directory
 node_modules
 bower_components
+package-lock.json
 
 # Editors
 .idea
 *.iml
+.cursor
 
 # OS metadata
 .DS_Store
@@ -48,14 +49,8 @@ packages/cli/src/generated/
 packages/core/src/generated/
 .integration-tests/
 packages/vscode-ide-companion/*.vsix
-packages/cli/download-ripgrep*/
-
-# GHA credentials
-gha-creds-*.json
 
 # Log files
+logs/
 patch_output.log
-
-.genkit
-.perplexity-clipboard/
-.eslintcache
+gha-creds-*.json

@@ -12,7 +12,7 @@ describe('web_search', () => {
     // Check if any web search provider is available
     const hasTavilyKey = !!process.env['TAVILY_API_KEY'];
     const hasGoogleKey =
-      !!process.env['GOOGLE_API_KEY'] &&
+      !!process.env['PERPLEXITY_API_KEY'] &&
       !!process.env['GOOGLE_SEARCH_ENGINE_ID'];
 
     // Skip if no provider is configured
@@ -21,7 +21,7 @@ describe('web_search', () => {
     if (!hasTavilyKey && !hasGoogleKey) {
       console.warn(
         'Skipping web search test: No web search provider configured. ' +
-          'Set TAVILY_API_KEY or GOOGLE_API_KEY+GOOGLE_SEARCH_ENGINE_ID environment variables.',
+          'Set TAVILY_API_KEY or PERPLEXITY_API_KEY+GOOGLE_SEARCH_ENGINE_ID environment variables.',
       );
       return;
     }
@@ -41,7 +41,7 @@ describe('web_search', () => {
     if (hasGoogleKey) {
       providers.push({
         type: 'google',
-        apiKey: process.env['GOOGLE_API_KEY'],
+        apiKey: process.env['PERPLEXITY_API_KEY'],
         searchEngineId: process.env['GOOGLE_SEARCH_ENGINE_ID'],
       });
     }

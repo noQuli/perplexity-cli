@@ -65,7 +65,7 @@ export function buildWebSearchConfig(
       } as WebSearchProviderConfig);
     }
 
-    const googleKey = argv.googleApiKey || process.env['GOOGLE_API_KEY'];
+    const googleKey = argv.googleApiKey;
     const googleEngineId =
       argv.googleSearchEngineId || process.env['GOOGLE_SEARCH_ENGINE_ID'];
     if (googleKey && googleEngineId) {

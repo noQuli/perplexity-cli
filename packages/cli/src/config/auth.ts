@@ -13,9 +13,9 @@ export function validateAuthMethod(authMethod: string): string | null {
 
   // Check for USE_OPENAI separately
   if (authMethod === AuthType.USE_OPENAI) {
-    const hasOpenAiKey = process.env['OPENAI_API_KEY'];
+    const hasOpenAiKey = process.env['PERPLEXITY_API_KEY'];
     if (!hasOpenAiKey) {
-      return 'OPENAI_API_KEY environment variable not found. You can enter it interactively or add it to your .env file.';
+      return 'PERPLEXITY_API_KEY environment variable not found. You can enter it interactively or add it to your .env file.';
     }
     return null;
   }
