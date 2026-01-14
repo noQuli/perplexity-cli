@@ -310,6 +310,7 @@ jobs:
           cache: 'npm'
 
       - name: 'Configure Windows Defender exclusions'
+        if: runner.os == 'Windows'
         run: |
           Add-MpPreference -ExclusionPath $env:GITHUB_WORKSPACE -Force
           Add-MpPreference -ExclusionPath "$env:GITHUB_WORKSPACE\node_modules" -Force
