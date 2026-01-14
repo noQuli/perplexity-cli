@@ -181,6 +181,15 @@ instructions.
 ### Building from Source
 
 ```bash
+# Download latest version of node
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
+# in lieu of restarting the shell
+\. "$HOME/.nvm/nvm.sh"
+
+# Download and install Node.js:
+nvm install 24
+
 # Clone the repository
 git clone https://github.com/NoQuli/perplexity-cli.git
 cd perplexity-cli
