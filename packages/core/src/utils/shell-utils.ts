@@ -94,6 +94,7 @@ export const isWindows = () => os.platform() === 'win32';
  * @param shell The type of shell the argument is for.
  * @returns The shell-escaped string.
  */
+
 export function escapeShellArg(arg: string, shell: ShellType): string {
   if (!arg) {
     return '';

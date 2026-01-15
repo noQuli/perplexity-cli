@@ -22,7 +22,15 @@ export class DeepSeekOpenAICompatibleProvider extends DefaultOpenAICompatiblePro
   ): boolean {
     const baseUrl = contentGeneratorConfig.baseUrl ?? '';
 
-    return baseUrl.toLowerCase().includes('api.deepseek.com');
+    try {
+      // parsing the URL allows us to isolate the hostname
+      const url = new URL(baseUrl);
+      return url.hostname === 'api.deepseek.com';
+    } catch {
+      // If the baseUrl is not a valid URL (e.g. empty or malformed),
+      // it cannot be the DeepSeek API.
+      return false;
+    }
   }
 
   override buildRequest(
