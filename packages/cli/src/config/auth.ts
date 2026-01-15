@@ -11,19 +11,11 @@ export function validateAuthMethod(authMethod: string): string | null {
   const settings = loadSettings();
   loadEnvironment(settings.merged);
 
-  // Check for USE_OPENAI separately
-  if (authMethod === AuthType.USE_OPENAI) {
-    const hasOpenAiKey = process.env['PERPLEXITY_API_KEY'];
-    if (!hasOpenAiKey) {
-      return 'PERPLEXITY_API_KEY environment variable not found. You can enter it interactively or add it to your .env file.';
-    }
-    return null;
-  }
-
-  // Perplexity CLI only supports API key authentication
+  // Perplexity CLI supports API key authentication
   if (
     authMethod === AuthType.PERPLEXITY_API_KEY ||
-    authMethod === AuthType.USE_PERPLEXITY
+    authMethod === AuthType.USE_PERPLEXITY ||
+    authMethod === AuthType.USE_OPENAI
   ) {
     const hasApiKey =
       process.env['PERPLEXITY_API_KEY'] ||
