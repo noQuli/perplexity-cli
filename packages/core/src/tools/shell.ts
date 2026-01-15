@@ -351,7 +351,8 @@ Co-authored-by: ${gitCoAuthorSettings.name} <${gitCoAuthorSettings.email}>`;
 
     // Handle different git commit patterns
     // Match -m "message" or -m 'message'
-    const messagePattern = /(-m\s+)(['"])((?:\\.|[^\\])*?)(\2)/;
+    const messagePattern =
+      /(-m\s+)(?:(")((?:\\.|[^\\"])*?)"|(')((?:\\.|[^\\'])*?)')/;
     const match = command.match(messagePattern);
 
     if (match) {

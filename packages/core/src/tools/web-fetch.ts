@@ -60,13 +60,28 @@ class WebFetchToolInvocation extends BaseToolInvocation<
     let url = this.params.url;
 
     // Convert GitHub blob URL to raw URL
-    if (url.includes('github.com') && url.includes('/blob/')) {
-      url = url
-        .replace('github.com', 'raw.githubusercontent.com')
-        .replace('/blob/', '/');
-      console.debug(
-        `[WebFetchTool] Converted GitHub blob URL to raw URL: ${url}`,
-      );
+    try {
+      const parsedUrl = new URL(url);
+      if (parsedUrl.hostname === 'github.com') {
+        // Use a Regex with a specific position to ensure we only replace
+        // the /blob/ segment that follows the repo name.
+        const blobPattern = /^\/([^/]+\/[^/]+)\/blob\//;
+
+        if (blobPattern.test(parsedUrl.pathname)) {
+          const rawUrl = new URL(parsedUrl.href);
+          rawUrl.hostname = 'raw.githubusercontent.com';
+          rawUrl.pathname = parsedUrl.pathname.replace(blobPattern, '/$1/');
+
+          url = rawUrl.toString();
+
+          // Security Fix: Scrub the log or only log the path to avoid token leaks
+          console.debug(
+            `[WebFetchTool] Converted to raw URL: ${rawUrl.origin}${rawUrl.pathname}`,
+          );
+        }
+      }
+    } catch (_e) {
+      // Optional: Log the error type without the full URL if privacy is a concern
     }
 
     try {

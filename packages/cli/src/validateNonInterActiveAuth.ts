@@ -88,7 +88,18 @@ export async function validateNonInteractiveAuth(
     }
 
     // For other modes (text), use existing error handling
-    console.error(error instanceof Error ? error.message : String(error));
+    // ... inside your catch block
+
+    const rawMessage = error instanceof Error ? error.message : String(error);
+
+    // Sanitize: If the API key is present in the error message, replace it with [REDACTED]
+    const apiKey = process.env['PERPLEXITY_API_KEY'];
+    const sanitizedMessage = apiKey
+      ? rawMessage.replace(apiKey, '[REDACTED_API_KEY]')
+      : rawMessage;
+
+    console.error(sanitizedMessage);
+
     process.exit(1);
   }
 }

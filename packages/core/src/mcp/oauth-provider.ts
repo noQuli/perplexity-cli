@@ -798,7 +798,7 @@ ${authUrl}
       if (savedToken && savedToken.token && savedToken.token.accessToken) {
         // Avoid leaking token material; log a short SHA-256 fingerprint instead.
         const tokenFingerprint = crypto
-          .createHash('sha256')
+          .createHmac('sha256', 'fingerprint_salt')
           .update(savedToken.token.accessToken)
           .digest('hex')
           .slice(0, 8);
