@@ -100,12 +100,11 @@ export function createContentGeneratorConfig(
   // Perplexity API key authentication (primary method)
   if (
     authType === AuthType.PERPLEXITY_API_KEY ||
+    authType === AuthType.USE_PERPLEXITY ||
     authType === AuthType.USE_OPENAI
   ) {
-    if (!newContentGeneratorConfig.apiKey) {
-      throw new Error('Perplexity API key is required');
-    }
-
+    // API key should already be in generationConfig if provided,
+    // but if not, we'll let createContentGenerator catch it
     return {
       ...newContentGeneratorConfig,
       model: newContentGeneratorConfig?.model || DEFAULT_PERPLEXITY_MODEL,

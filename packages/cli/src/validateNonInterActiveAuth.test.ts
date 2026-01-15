@@ -108,7 +108,7 @@ describe('validateNonInterActiveAuth', () => {
     expect(processExitSpy).toHaveBeenCalledWith(1);
   });
 
-  it('uses USE_OPENAI if PERPLEXITY_API_KEY is set', async () => {
+  it('uses PERPLEXITY_API_KEY if PERPLEXITY_API_KEY is set', async () => {
     process.env['PERPLEXITY_API_KEY'] = 'fake-openai-key';
     const nonInteractiveConfig = {
       refreshAuth: refreshAuthMock,
@@ -123,7 +123,7 @@ describe('validateNonInterActiveAuth', () => {
       nonInteractiveConfig,
       mockSettings,
     );
-    expect(refreshAuthMock).toHaveBeenCalledWith(AuthType.USE_OPENAI);
+    expect(refreshAuthMock).toHaveBeenCalledWith(AuthType.PERPLEXITY_API_KEY);
   });
 
   it('uses configured USE_PERPLEXITY if provided', async () => {
@@ -194,25 +194,28 @@ describe('validateNonInterActiveAuth', () => {
   });
 
   it('uses enforcedAuthType if provided', async () => {
-    mockSettings.merged.security!.auth!.enforcedType = AuthType.USE_OPENAI;
-    mockSettings.merged.security!.auth!.selectedType = AuthType.USE_OPENAI;
-    // Set required env var for USE_OPENAI to ensure enforcedAuthType takes precedence
+    mockSettings.merged.security!.auth!.enforcedType =
+      AuthType.PERPLEXITY_API_KEY;
+    mockSettings.merged.security!.auth!.selectedType =
+      AuthType.PERPLEXITY_API_KEY;
+    // Set required env var for PERPLEXITY_API_KEY to ensure enforcedAuthType takes precedence
     process.env['PERPLEXITY_API_KEY'] = 'fake-key';
     const nonInteractiveConfig = {
       refreshAuth: refreshAuthMock,
+      getOutputFormat: vi.fn().mockReturnValue(OutputFormat.TEXT),
     } as unknown as Config;
     await validateNonInteractiveAuth(
-      AuthType.USE_OPENAI,
+      AuthType.PERPLEXITY_API_KEY,
       undefined,
       nonInteractiveConfig,
       mockSettings,
     );
-    expect(refreshAuthMock).toHaveBeenCalledWith(AuthType.USE_OPENAI);
+    expect(refreshAuthMock).toHaveBeenCalledWith(AuthType.PERPLEXITY_API_KEY);
   });
 
   it('exits if currentAuthType does not match enforcedAuthType', async () => {
-    mockSettings.merged.security!.auth!.enforcedType =
-      AuthType.PERPLEXITY_API_KEY;
+    // Set enforced type to USE_PERPLEXITY, but env has PERPLEXITY_API_KEY
+    mockSettings.merged.security!.auth!.enforcedType = AuthType.USE_PERPLEXITY;
     process.env['PERPLEXITY_API_KEY'] = 'fake-key';
     const nonInteractiveConfig = {
       refreshAuth: refreshAuthMock,
@@ -223,7 +226,7 @@ describe('validateNonInterActiveAuth', () => {
     } as unknown as Config;
     try {
       await validateNonInteractiveAuth(
-        AuthType.USE_OPENAI,
+        undefined,
         undefined,
         nonInteractiveConfig,
         mockSettings,
@@ -233,7 +236,7 @@ describe('validateNonInterActiveAuth', () => {
       expect((e as Error).message).toContain('process.exit(1) called');
     }
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      'The configured auth type is perplexity-api-key, but the current auth type is openai. Please re-authenticate with the correct type.',
+      'The configured auth type is use-perplexity, but the current auth type is perplexity-api-key. Please re-authenticate with the correct type.',
     );
     expect(processExitSpy).toHaveBeenCalledWith(1);
   });
@@ -293,8 +296,9 @@ describe('validateNonInterActiveAuth', () => {
     });
 
     it('emits error result and exits when enforced auth mismatches current auth', async () => {
+      // Set enforced type to USE_PERPLEXITY, but env has PERPLEXITY_API_KEY
       mockSettings.merged.security!.auth!.enforcedType =
-        AuthType.PERPLEXITY_API_KEY;
+        AuthType.USE_PERPLEXITY;
       process.env['PERPLEXITY_API_KEY'] = 'fake-key';
 
       const nonInteractiveConfig = {
@@ -320,7 +324,7 @@ describe('validateNonInterActiveAuth', () => {
       expect(emitResultMock).toHaveBeenCalledWith({
         isError: true,
         errorMessage: expect.stringContaining(
-          'The configured auth type is perplexity-api-key, but the current auth type is openai.',
+          'The configured auth type is use-perplexity, but the current auth type is perplexity-api-key.',
         ),
         durationMs: 0,
         apiDurationMs: 0,
@@ -346,7 +350,7 @@ describe('validateNonInterActiveAuth', () => {
 
       try {
         await validateNonInteractiveAuth(
-          AuthType.USE_OPENAI,
+          AuthType.PERPLEXITY_API_KEY,
           undefined,
           nonInteractiveConfig,
           mockSettings,
@@ -429,8 +433,9 @@ describe('validateNonInterActiveAuth', () => {
     });
 
     it('emits error result and exits when enforced auth mismatches current auth', async () => {
+      // Set enforced type to USE_PERPLEXITY, but env has PERPLEXITY_API_KEY
       mockSettings.merged.security!.auth!.enforcedType =
-        AuthType.PERPLEXITY_API_KEY;
+        AuthType.USE_PERPLEXITY;
       process.env['PERPLEXITY_API_KEY'] = 'fake-key';
 
       const nonInteractiveConfig = {
@@ -457,7 +462,7 @@ describe('validateNonInterActiveAuth', () => {
       expect(emitResultMock).toHaveBeenCalledWith({
         isError: true,
         errorMessage: expect.stringContaining(
-          'The configured auth type is perplexity-api-key, but the current auth type is openai.',
+          'The configured auth type is use-perplexity, but the current auth type is perplexity-api-key.',
         ),
         durationMs: 0,
         apiDurationMs: 0,
