@@ -24,17 +24,30 @@ jobs:
 
     steps:
       - name: 'Checkout repository'
-        uses: 'actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8' # ratchet:actions/checkout@v5
+        uses: 'actions/checkout@v4'
 
       - name: 'Set up QEMU'
-        uses: 'docker/setup-qemu-action@v3' # ratchet:exclude
+        uses: 'docker/setup-qemu-action@v3'
 
       - name: 'Set up Docker Buildx'
-        uses: 'docker/setup-buildx-action@v3' # ratchet:exclude
+        uses: 'docker/setup-buildx-action@v3'
+
+      - name: 'Determine if should push'
+        id: 'should-push'
+        run: |
+          SHOULD_PUSH="false"
+          if [[ "${{ github.event_name }}" == "push" && "${{ startsWith(github.ref, 'refs/tags/v') }}" == "true" ]]; then
+            SHOULD_PUSH="true"
+          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            SHOULD_PUSH="true"
+          elif [[ "${{ github.event.inputs.publish }}" == "true" ]]; then
+            SHOULD_PUSH="true"
+          fi
+          echo "push=${SHOULD_PUSH}" >> "$GITHUB_OUTPUT"
 
       - name: 'Extract metadata (tags, labels) for Docker'
         id: 'meta'
-        uses: 'docker/metadata-action@v5' # ratchet:exclude
+        uses: 'docker/metadata-action@v5'
         with:
           images: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}'
           tags: |
@@ -45,9 +58,8 @@ jobs:
             type=sha,prefix=sha-,format=short
 
       - name: 'Log in to the Container registry'
-        if: |-
-          ${{ github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') || github.event.inputs.publish == 'true') }}
-        uses: 'docker/login-action@v3' # ratchet:exclude
+        if: steps.should-push.outputs.push == 'true'
+        uses: 'docker/login-action@v3'
         with:
           registry: '${{ env.REGISTRY }}'
           username: '${{ github.actor }}'
@@ -55,12 +67,11 @@ jobs:
 
       - name: 'Build and push Docker image'
         id: 'build-and-push'
-        uses: 'docker/build-push-action@v6' # ratchet:exclude
+        uses: 'docker/build-push-action@v6'
         with:
           context: '.'
           platforms: 'linux/amd64,linux/arm64'
-          push: |-
-            ${{ github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v') || github.event.inputs.publish == 'true') }}
+          push: '${{ steps.should-push.outputs.push }}'
           tags: '${{ steps.meta.outputs.tags }}'
           labels: '${{ steps.meta.outputs.labels }}'
           build-args: |
