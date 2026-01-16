@@ -1,10 +1,15 @@
 name: 'Publish Release'
-description: 'Builds, prepares, and publishes the gemini-cli packages to npm and creates a GitHub release.'
+description: 'Builds, prepares, and publishes the perplexity-cli packages to npm and creates a GitHub release.'
 
 inputs:
   release-version:
     description: 'The version to release (e.g., 0.1.11).'
     required: true
+  skip-npm-publish:
+    description: 'Whether to skip npm publishing'
+    type: 'boolean'
+    required: false
+    default: false 
   npm-tag:
     description: 'The npm tag to publish with (e.g., latest, preview, nightly).'
     required: true
@@ -137,6 +142,7 @@ runs:
 
     - name: '📦 Publish CLI'
       working-directory: '${{ inputs.working-directory }}'
+      if: "${{inputs.skip-npm-publish != 'true'}}"
       env:
         NODE_AUTH_TOKEN: '${{ steps.cli-token.outputs.auth-token }}'
       shell: 'bash'
@@ -166,7 +172,7 @@ runs:
       shell: 'bash'
       run: |
         gh release create "${{ inputs.release-tag }}" \
-          bundle/gemini.js \
+          bundle/perplexity.js \
           --target "${{ steps.release_branch.outputs.BRANCH_NAME }}" \
           --title "Release ${{ inputs.release-tag }}" \
           --notes-start-tag "${{ inputs.previous-tag }}" \
