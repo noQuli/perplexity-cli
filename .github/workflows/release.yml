@@ -44,8 +44,7 @@ jobs:
     environment:
       name: 'production-release'
       url: '${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ steps.version.outputs.RELEASE_TAG }}'
-    if: |-
-      ${{ github.repository == 'perplexity-ai/perplexity-cli' }}
+    if: github.repository == 'NoQuli/perplexity-cli'
     permissions:
       contents: 'write'
       packages: 'write'
@@ -129,8 +128,7 @@ jobs:
           MANUAL_VERSION: '${{ inputs.version }}'
 
       - name: 'Run Tests'
-        if: |-
-          ${{ github.event.inputs.force_skip_tests != 'true' }}
+        if: github.event.inputs.force_skip_tests != 'true'
         run: |
           npm run preflight
           npm run test:integration:sandbox:none
@@ -199,8 +197,7 @@ jobs:
           NODE_AUTH_TOKEN: '${{ secrets.NPM_TOKEN }}'
 
       - name: 'Create GitHub Release and Tag'
-        if: |-
-          ${{ steps.vars.outputs.is_dry_run == 'false' }}
+        if: steps.vars.outputs.is_dry_run == 'false'
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           RELEASE_BRANCH: '${{ steps.release_branch.outputs.BRANCH_NAME }}'
@@ -215,8 +212,7 @@ jobs:
             --generate-notes
 
       - name: 'Create Issue on Failure'
-        if: |-
-          ${{ failure() }}
+        if: failure()
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
           RELEASE_TAG: '${{ steps.version.outputs.RELEASE_TAG }} || "N/A"'
