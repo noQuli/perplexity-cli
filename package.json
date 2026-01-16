@@ -85,7 +85,7 @@
     }
   },
   "bin": {
-    "perplexity": "dist/cli.js"
+    "perplexity": "dist/perplexity.js"
   },
   "files": [
     "dist/",

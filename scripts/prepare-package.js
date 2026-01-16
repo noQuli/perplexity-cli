@@ -7,7 +7,7 @@
 /**
  * Prepares the bundled CLI package for npm publishing
  * This script adds publishing metadata (package.json, README, LICENSE) to dist/
- * All runtime assets (cli.js, vendor/, *.sb) are already in dist/ from the bundle step
+ * All runtime assets (perplexity.js, vendor/, *.sb) are already in dist/ from the bundle step
  */
 
 import fs from 'node:fs';
@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
 const distDir = path.join(rootDir, 'dist');
-const cliBundlePath = path.join(distDir, 'cli.js');
+const cliBundlePath = path.join(distDir, 'perplexity.js');
 const vendorDir = path.join(distDir, 'vendor');
 
 // Verify dist directory and bundle exist
@@ -124,11 +124,11 @@ const distPackageJson = {
   bugs: rootPackageJson.bugs,
   homepage: rootPackageJson.homepage,
   type: 'module',
-  main: 'cli.js',
+  main: 'perplexity.js',
   bin: {
-    perplexity: 'cli.js',
+    perplexity: 'perplexity.js',
   },
-  files: ['cli.js', 'vendor', '*.sb', 'README.md', 'LICENSE', 'locales'],
+  files: ['perplexity.js', 'vendor', '*.sb', 'README.md', 'LICENSE', 'locales'],
   config: rootPackageJson.config,
   dependencies: runtimeDependencies,
   optionalDependencies: {

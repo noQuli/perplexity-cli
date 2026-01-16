@@ -182,10 +182,10 @@ export interface QueryOptions {
    * Supports multiple formats:
    * - 'perplexity' -> native binary (auto-detected from PATH)
    * - '/path/to/perplexity' -> native binary (explicit path)
-   * - '/path/to/cli.js' -> Node.js bundle (default for .js files)
+   * - '/path/to/perplexity.js' -> Node.js bundle (default for .js files)
    * - '/path/to/index.ts' -> TypeScript source (requires tsx)
-   * - 'bun:/path/to/cli.js' -> Force Bun runtime
-   * - 'node:/path/to/cli.js' -> Force Node.js runtime
+   * - 'bun:/path/to/perplexity.js' -> Force Bun runtime
+   * - 'node:/path/to/perplexity.js' -> Force Node.js runtime
    * - 'tsx:/path/to/index.ts' -> Force tsx runtime
    * - 'deno:/path/to/cli.ts' -> Force Deno runtime
    *

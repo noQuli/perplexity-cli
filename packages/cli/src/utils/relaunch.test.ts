@@ -169,7 +169,7 @@ describe('relaunchAppInChildProcess', () => {
       const mockExecArgv = ['--inspect=9229', '--trace-warnings'];
       const mockArgv = [
         '/usr/bin/node',
-        '/path/to/cli.js',
+        '/path/to/perplexity.js',
         'command',
         '--flag=value',
         '--verbose',
@@ -202,7 +202,7 @@ describe('relaunchAppInChildProcess', () => {
         '--max-old-space-size=4096',
         '--experimental-modules',
         // The script path
-        '/path/to/cli.js',
+        '/path/to/perplexity.js',
         // Additional script arguments passed to function
         '--model',
         'perplexity-1.5-pro',
@@ -219,7 +219,7 @@ describe('relaunchAppInChildProcess', () => {
     it('should handle empty additional arguments correctly', () => {
       // Test edge cases with empty arrays
       const mockExecArgv = ['--trace-warnings'];
-      const mockArgv = ['/usr/bin/node', '/app/cli.js', 'start'];
+      const mockArgv = ['/usr/bin/node', '/app/perplexity.js', 'start'];
       const additionalNodeArgs: string[] = [];
       const additionalScriptArgs: string[] = [];
 
@@ -235,7 +235,7 @@ describe('relaunchAppInChildProcess', () => {
         ...scriptArgs,
       ];
 
-      const expectedArgs = ['--trace-warnings', '/app/cli.js', 'start'];
+      const expectedArgs = ['--trace-warnings', '/app/perplexity.js', 'start'];
 
       expect(nodeArgs).toEqual(expectedArgs);
     });
@@ -245,7 +245,7 @@ describe('relaunchAppInChildProcess', () => {
       const mockExecArgv = ['--max-old-space-size=8192'];
       const mockArgv = [
         '/usr/bin/node',
-        '/cli.js',
+        '/perplexity.js',
         '--config=/path/to/config.json',
         '--verbose',
         'subcommand',
@@ -269,7 +269,7 @@ describe('relaunchAppInChildProcess', () => {
       const expectedArgs = [
         '--max-old-space-size=8192',
         '--inspect-brk=9230',
-        '/cli.js',
+        '/perplexity.js',
         '--model=gpt-4',
         '--temperature=0.7',
         '--config=/path/to/config.json',
@@ -286,7 +286,7 @@ describe('relaunchAppInChildProcess', () => {
     // limitations with ES modules. The core logic is tested in relaunchOnExitCode tests.
 
     it('should handle null exit code from child process', async () => {
-      process.argv = ['/usr/bin/node', '/app/cli.js'];
+      process.argv = ['/usr/bin/node', '/app/perplexity.js'];
 
       const mockChild = createMockChildProcess(0, false); // Don't auto-close
       mockedSpawn.mockImplementation(() => {

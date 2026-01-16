@@ -40,7 +40,7 @@ esbuild
   .build({
     entryPoints: ['packages/cli/index.ts'],
     bundle: true,
-    outfile: 'dist/cli.js',
+    outfile: 'dist/perplexity.js',
     platform: 'node',
     format: 'esm',
     target: 'node20',
