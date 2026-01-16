@@ -31,6 +31,11 @@ on:
         required: false
         type: 'boolean'
         default: false
+      skip-npm-publish: 
+        description: 'Select to SKIP npm package publish'
+        required: false
+        type: 'boolean'
+        default: false 
       environment:
         description: 'Environment'
         required: false

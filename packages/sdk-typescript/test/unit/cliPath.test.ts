@@ -80,11 +80,11 @@ describe('CLI Path Utilities', () => {
       it('should parse node runtime prefix', () => {
         mockFs.existsSync.mockReturnValue(true);
 
-        const result = parseExecutableSpec('node:/path/to/cli.js');
+        const result = parseExecutableSpec('node:/path/to/perplexity.js');
 
         expect(result).toEqual({
           runtime: 'node',
-          executablePath: path.resolve('/path/to/cli.js'),
+          executablePath: path.resolve('/path/to/perplexity.js'),
           isExplicitRuntime: true,
         });
       });
@@ -92,11 +92,11 @@ describe('CLI Path Utilities', () => {
       it('should parse bun runtime prefix', () => {
         mockFs.existsSync.mockReturnValue(true);
 
-        const result = parseExecutableSpec('bun:/path/to/cli.js');
+        const result = parseExecutableSpec('bun:/path/to/perplexity.js');
 
         expect(result).toEqual({
           runtime: 'bun',
-          executablePath: path.resolve('/path/to/cli.js'),
+          executablePath: path.resolve('/path/to/perplexity.js'),
           isExplicitRuntime: true,
         });
       });
@@ -134,9 +134,9 @@ describe('CLI Path Utilities', () => {
       it('should throw when runtime-prefixed file does not exist', () => {
         mockFs.existsSync.mockReturnValue(false);
 
-        expect(() => parseExecutableSpec('node:/nonexistent/cli.js')).toThrow(
-          'Executable file not found at',
-        );
+        expect(() =>
+          parseExecutableSpec('node:/nonexistent/perplexity.js'),
+        ).toThrow('Executable file not found at');
       });
     });
 
@@ -224,13 +224,13 @@ describe('CLI Path Utilities', () => {
 
     describe('JavaScript files', () => {
       it('should use node for .js files', () => {
-        const result = prepareSpawnInfo('/path/to/cli.js');
+        const result = prepareSpawnInfo('/path/to/perplexity.js');
 
         expect(result).toEqual({
           command: process.execPath,
-          args: [path.resolve('/path/to/cli.js')],
+          args: [path.resolve('/path/to/perplexity.js')],
           type: 'node',
-          originalInput: '/path/to/cli.js',
+          originalInput: '/path/to/perplexity.js',
         });
       });
 
@@ -241,13 +241,13 @@ describe('CLI Path Utilities', () => {
           writable: true,
         });
 
-        const result = prepareSpawnInfo('/path/to/cli.js');
+        const result = prepareSpawnInfo('/path/to/perplexity.js');
 
         expect(result).toEqual({
           command: process.execPath,
-          args: [path.resolve('/path/to/cli.js')],
+          args: [path.resolve('/path/to/perplexity.js')],
           type: 'node',
-          originalInput: '/path/to/cli.js',
+          originalInput: '/path/to/perplexity.js',
         });
       });
 
@@ -316,24 +316,24 @@ describe('CLI Path Utilities', () => {
 
     describe('explicit runtime specifications', () => {
       it('should use explicit node runtime', () => {
-        const result = prepareSpawnInfo('node:/path/to/cli.js');
+        const result = prepareSpawnInfo('node:/path/to/perplexity.js');
 
         expect(result).toEqual({
           command: process.execPath,
-          args: [path.resolve('/path/to/cli.js')],
+          args: [path.resolve('/path/to/perplexity.js')],
           type: 'node',
-          originalInput: 'node:/path/to/cli.js',
+          originalInput: 'node:/path/to/perplexity.js',
         });
       });
 
       it('should use explicit bun runtime', () => {
-        const result = prepareSpawnInfo('bun:/path/to/cli.js');
+        const result = prepareSpawnInfo('bun:/path/to/perplexity.js');
 
         expect(result).toEqual({
           command: 'bun',
-          args: [path.resolve('/path/to/cli.js')],
+          args: [path.resolve('/path/to/perplexity.js')],
           type: 'bun',
-          originalInput: 'bun:/path/to/cli.js',
+          originalInput: 'bun:/path/to/perplexity.js',
         });
       });
 
@@ -443,7 +443,7 @@ describe('CLI Path Utilities', () => {
     });
 
     it('should handle production bundle validation', () => {
-      const bundlePath = '/path/to/bundled/cli.js';
+      const bundlePath = '/path/to/bundled/perplexity.js';
       const result = prepareSpawnInfo(bundlePath);
 
       expect(result).toEqual({
@@ -466,7 +466,7 @@ describe('CLI Path Utilities', () => {
     });
 
     it('should handle bun runtime with bundle', () => {
-      const bundlePath = '/path/to/cli.js';
+      const bundlePath = '/path/to/perplexity.js';
       const result = prepareSpawnInfo(`bun:${bundlePath}`);
 
       expect(result).toEqual({
@@ -490,7 +490,7 @@ describe('CLI Path Utilities', () => {
     it('should provide helpful error for missing JavaScript file', () => {
       mockFs.existsSync.mockReturnValue(false);
 
-      expect(() => prepareSpawnInfo('/missing/cli.js')).toThrow(
+      expect(() => prepareSpawnInfo('/missing/perplexity.js')).toThrow(
         'Executable file not found at',
       );
     });
@@ -522,7 +522,7 @@ describe('CLI Path Utilities', () => {
           return Buffer.from('');
         });
 
-        expect(() => parseExecutableSpec('bun:/path/to/cli.js')).toThrow(
+        expect(() => parseExecutableSpec('bun:/path/to/perplexity.js')).toThrow(
           "Runtime 'bun' is not available on this system. Please install it first.",
         );
       });
@@ -530,7 +530,9 @@ describe('CLI Path Utilities', () => {
       it('should allow node runtime (always available)', () => {
         mockFs.existsSync.mockReturnValue(true);
 
-        expect(() => parseExecutableSpec('node:/path/to/cli.js')).not.toThrow();
+        expect(() =>
+          parseExecutableSpec('node:/path/to/perplexity.js'),
+        ).not.toThrow();
       });
 
       it('should validate file extension matches runtime', () => {
@@ -642,7 +644,7 @@ describe('CLI Path Utilities', () => {
           'Install perplexity globally: npm install -g perplexity',
         );
         expect(() => parseExecutableSpec('/missing/file')).toThrow(
-          'Force specific runtime: bun:/path/to/cli.js or tsx:/path/to/index.ts',
+          'Force specific runtime: bun:/path/to/perplexity.js or tsx:/path/to/index.ts',
         );
       });
     });
