@@ -14,17 +14,11 @@ inputs:
   github-token:
     description: 'The GitHub token'
     required: true
-  wombat-token-core:
-    description: 'The npm token for the cli-core package'
-    required: true
   wombat-token-cli:
     description: 'The npm token for the cli package'
     required: true
   cli-package-name:
     description: 'The name of the cli package'
-    required: true
-  core-package-name:
-    description: 'The name of the core package'
     required: true
   working-directory:
     description: 'The working directory'
@@ -34,32 +28,12 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: 'Get Core Token for Tagging'
-      uses: './.github/actions/npm-auth-token'
-      id: 'core-token'
-      with:
-        package-name: '${{ inputs.core-package-name }}'
-        github-token: '${{ inputs.github-token }}'
-        wombat-token-core: '${{ inputs.wombat-token-core }}'
-        wombat-token-cli: '${{ inputs.wombat-token-cli }}'
-
-    - name: 'Tag Core Package'
-      if: inputs.dry-run != 'true'
-      working-directory: '${{ inputs.working-directory }}'
-      shell: 'bash'
-      env:
-        NODE_AUTH_TOKEN: '${{ steps.core-token.outputs.auth-token }}'
-      run: |
-        echo "Tagging ${{ inputs.core-package-name }}@${{ inputs.version }} with '${{ inputs.channel }}'"
-        npm dist-tag add "${{ inputs.core-package-name }}@${{ inputs.version }}" "${{ inputs.channel }}"
-
     - name: 'Get CLI Token for Tagging'
       uses: './.github/actions/npm-auth-token'
       id: 'cli-token'
       with:
         package-name: '${{ inputs.cli-package-name }}'
         github-token: '${{ inputs.github-token }}'
-        wombat-token-core: '${{ inputs.wombat-token-core }}'
         wombat-token-cli: '${{ inputs.wombat-token-cli }}'
 
     - name: 'Tag CLI Package'
@@ -77,5 +51,4 @@ runs:
       shell: 'bash'
       run: |
         echo "DRY RUN: Would tag:"
-        echo "  - ${{ inputs.core-package-name }}@${{ inputs.version }} -> ${{ inputs.channel }}"
         echo "  - ${{ inputs.cli-package-name }}@${{ inputs.version }} -> ${{ inputs.channel }}"

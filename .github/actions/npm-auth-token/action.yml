@@ -8,9 +8,6 @@ inputs:
   github-token:
     description: 'the github token'
     required: true
-  wombat-token-core:
-    description: 'The npm token for the cli-core package.'
-    required: true
   wombat-token-cli:
     description: 'The npm token for the cli package.'
     required: true
@@ -31,7 +28,5 @@ runs:
         PACKAGE_NAME="${{ inputs.package-name }}"
         if [[ "$PACKAGE_NAME" == "@perplexity-cli/perplexity-cli" ]]; then
           AUTH_TOKEN="${{ inputs.wombat-token-cli }}"
-        elif [[ "$PACKAGE_NAME" == "@perplexity/perplexity-cli-core" ]]; then
-          AUTH_TOKEN="${{ inputs.wombat-token-core }}"
         fi
         echo "auth-token=$AUTH_TOKEN" >> $GITHUB_OUTPUT
