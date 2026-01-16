@@ -93,7 +93,6 @@ jobs:
           release-version: '${{ steps.release_info.outputs.RELEASE_VERSION }}'
           release-tag: '${{ github.event.inputs.version }}'
           npm-tag: '${{ github.event.inputs.npm_channel }}'
-          wombat-token-core: '${{ secrets.NPM_TOKEN }}'
           wombat-token-cli: '${{ secrets.NPM_TOKEN }}'
           github-token: '${{ secrets.GITHUB_TOKEN }}'
           dry-run: '${{ github.event.inputs.dry_run }}'
@@ -104,4 +103,3 @@ jobs:
           npm-registry-url: '${{ vars.NPM_REGISTRY_URL }}'
           npm-registry-scope: '${{ vars.NPM_REGISTRY_SCOPE }}'
           cli-package-name: '${{ vars.CLI_PACKAGE_NAME }}'
-          core-package-name: '${{ vars.CORE_PACKAGE_NAME }}'

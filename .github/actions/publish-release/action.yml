@@ -8,9 +8,6 @@ inputs:
   npm-tag:
     description: 'The npm tag to publish with (e.g., latest, preview, nightly).'
     required: true
-  wombat-token-core:
-    description: 'The npm token for the cli-core package.'
-    required: true
   wombat-token-cli:
     description: 'The npm token for the cli package.'
     required: true
@@ -52,9 +49,6 @@ inputs:
     required: true
   cli-package-name:
     description: 'The name of the cli package.'
-    required: true
-  core-package-name:
-    description: 'The name of the core package.'
     required: true
 runs:
   using: 'composite'
@@ -133,43 +127,12 @@ runs:
         registry-url: '${{inputs.npm-registry-publish-url}}'
         scope: '${{inputs.npm-registry-scope}}'
 
-    - name: 'Get core Token'
-      uses: './.github/actions/npm-auth-token'
-      id: 'core-token'
-      with:
-        package-name: '${{ inputs.core-package-name }}'
-        github-token: '${{ inputs.github-token }}'
-        wombat-token-core: '${{ inputs.wombat-token-core }}'
-        wombat-token-cli: '${{ inputs.wombat-token-cli }}'
-
-    - name: '📦 Publish CORE to NPM'
-      working-directory: '${{ inputs.working-directory }}'
-      env:
-        NODE_AUTH_TOKEN: '${{ steps.core-token.outputs.auth-token }}'
-      shell: 'bash'
-      run: |
-        npm publish \
-          --dry-run="${{ inputs.dry-run }}" \
-          --workspace="${{ inputs.core-package-name }}" \
-          --no-tag
-        npm dist-tag rm ${{ inputs.core-package-name }} false --silent
-
-    - name: '🔗 Install latest core package'
-      working-directory: '${{ inputs.working-directory }}'
-      if: "${{ inputs.dry-run != 'true' }}"
-      shell: 'bash'
-      run: |
-        npm install "${{ inputs.core-package-name }}@${{ inputs.release-version }}" \
-        --workspace="${{ inputs.cli-package-name }}" \
-        --save-exact
-
     - name: 'Get CLI Token'
       uses: './.github/actions/npm-auth-token'
       id: 'cli-token'
       with:
         package-name: '${{ inputs.cli-package-name }}'
         github-token: '${{ inputs.github-token }}'
-        wombat-token-core: '${{ inputs.wombat-token-core }}'
         wombat-token-cli: '${{ inputs.wombat-token-cli }}'
 
     - name: '📦 Publish CLI'
@@ -191,10 +154,8 @@ runs:
         version: '${{ inputs.release-version }}'
         dry-run: '${{ inputs.dry-run }}'
         github-token: '${{ inputs.github-token }}'
-        wombat-token-core: '${{ inputs.wombat-token-core }}'
         wombat-token-cli: '${{ inputs.wombat-token-cli }}'
         cli-package-name: '${{ inputs.cli-package-name }}'
-        core-package-name: '${{ inputs.core-package-name }}'
         working-directory: '${{ inputs.working-directory }}'
 
     - name: '🎉 Create GitHub Release'

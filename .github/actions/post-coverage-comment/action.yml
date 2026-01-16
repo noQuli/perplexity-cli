@@ -5,14 +5,8 @@ inputs:
   cli_json_file:
     description: 'Path to CLI coverage-summary.json'
     required: true
-  core_json_file:
-    description: 'Path to Core coverage-summary.json'
-    required: true
   cli_full_text_summary_file:
     description: 'Path to CLI full-text-summary.txt'
-    required: true
-  core_full_text_summary_file:
-    description: 'Path to Core full-text-summary.txt'
     required: true
   node_version:
     description: 'Node.js version for context in messages'
@@ -32,9 +26,7 @@ runs:
       shell: 'bash'
       env:
         CLI_JSON_FILE: '${{ inputs.cli_json_file }}'
-        CORE_JSON_FILE: '${{ inputs.core_json_file }}'
         CLI_FULL_TEXT_SUMMARY_FILE: '${{ inputs.cli_full_text_summary_file }}'
-        CORE_FULL_TEXT_SUMMARY_FILE: '${{ inputs.core_full_text_summary_file }}'
         COMMENT_FILE: 'coverage-comment.md'
         NODE_VERSION: '${{ inputs.node_version }}'
         OS: '${{ inputs.os }}'
@@ -53,25 +45,11 @@ runs:
           echo "CLI coverage-summary.json not found at: ${CLI_JSON_FILE}" >&2 # Error to stderr
         fi
 
-        if [ -f "${CORE_JSON_FILE}" ]; then
-          core_lines_pct="$(jq -r '.total.lines.pct' "${CORE_JSON_FILE}")"
-          core_statements_pct="$(jq -r '.total.statements.pct' "${CORE_JSON_FILE}")"
-          core_functions_pct="$(jq -r '.total.functions.pct' "${CORE_JSON_FILE}")"
-          core_branches_pct="$(jq -r '.total.branches.pct' "${CORE_JSON_FILE}")"
-        else
-          core_lines_pct="N/A"
-          core_statements_pct="N/A"
-          core_functions_pct="N/A"
-          core_branches_pct="N/A"
-          echo "Core coverage-summary.json not found at: ${CORE_JSON_FILE}" >&2 # Error to stderr
-        fi
-
         echo "## Code Coverage Summary" > "${COMMENT_FILE}"
         echo "" >> "${COMMENT_FILE}"
         echo "| Package | Lines | Statements | Functions | Branches |" >> "${COMMENT_FILE}"
         echo "|---|---|---|---|---|" >> "${COMMENT_FILE}"
         echo "| CLI | ${cli_lines_pct}% | ${cli_statements_pct}% | ${cli_functions_pct}% | ${cli_branches_pct}% |" >> "${COMMENT_FILE}"
-        echo "| Core | ${core_lines_pct}% | ${core_statements_pct}% | ${core_functions_pct}% | ${core_branches_pct}% |" >> "${COMMENT_FILE}"
         echo "" >> "${COMMENT_FILE}"
 
         # CLI Package - Collapsible Section (with full text summary from file)
@@ -83,20 +61,6 @@ runs:
           cat "${CLI_FULL_TEXT_SUMMARY_FILE}" >> "${COMMENT_FILE}"
         else
           echo "CLI full-text-summary.txt not found at: ${CLI_FULL_TEXT_SUMMARY_FILE}" >> "${COMMENT_FILE}"
-        fi
-        echo '```' >> "${COMMENT_FILE}"
-        echo "</details>" >> "${COMMENT_FILE}"
-        echo "" >> "${COMMENT_FILE}"
-
-        # Core Package - Collapsible Section (with full text summary from file)
-        echo "<details>" >> "${COMMENT_FILE}"
-        echo "<summary>Core Package - Full Text Report</summary>" >> "${COMMENT_FILE}"
-        echo "" >> "${COMMENT_FILE}"
-        echo '```text' >> "${COMMENT_FILE}"
-        if [ -f "${CORE_FULL_TEXT_SUMMARY_FILE}" ]; then
-          cat "${CORE_FULL_TEXT_SUMMARY_FILE}" >> "${COMMENT_FILE}"
-        else
-          echo "Core full-text-summary.txt not found at: ${CORE_FULL_TEXT_SUMMARY_FILE}" >> "${COMMENT_FILE}"
         fi
         echo '```' >> "${COMMENT_FILE}"
         echo "</details>" >> "${COMMENT_FILE}"
