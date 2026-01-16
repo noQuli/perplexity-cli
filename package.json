@@ -1,6 +1,6 @@
 {
   "name": "@perplexity-cli/perplexity-cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An AI-powered command-line interface for interacting with Perplexity AI's Sonar models",
   "author": "Perplexity AI",
   "license": "Apache-2.0",
