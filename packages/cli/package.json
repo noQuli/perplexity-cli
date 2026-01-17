@@ -1,6 +1,6 @@
 {
   "name": "@perplexity-cli/perplexity-cli",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "Perplexity CLI",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "dist"
   ],
   "config": {
-    "sandboxImageUri": "ghcr.io/perplexity-ai/perplexity-cli:0.1.0"
+    "sandboxImageUri": "ghcr.io/perplexity-ai/perplexity-cli:0.1.5"
   },
   "dependencies": {
     "@google/genai": "1.16.0",
