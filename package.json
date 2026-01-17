@@ -1,6 +1,6 @@
 {
   "name": "@perplexity-cli/perplexity-cli",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "An AI-powered command-line interface for interacting with Perplexity AI's Sonar models",
   "author": "Perplexity AI",
   "license": "Apache-2.0",
@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/NoQuli/perplexity-cli#readme",
   "config": {
-    "sandboxImageUri": "ghcr.io/perplexity-ai/perplexity-cli:0.1.0"
+    "sandboxImageUri": "ghcr.io/perplexity-ai/perplexity-cli:0.1.6"
   },
   "scripts": {
     "start": "cross-env node scripts/start.js",
