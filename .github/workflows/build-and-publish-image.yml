@@ -10,6 +10,11 @@ on:
         description: 'Publish to GHCR (only works on main branch)'
         type: 'boolean'
         default: false
+      tag:
+        description: 'The tag to release from'
+        required: true 
+        type: 'string'
+
 
 env:
   REGISTRY: 'ghcr.io'
@@ -51,7 +56,7 @@ jobs:
         with:
           images: '${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}'
           tags: |
-            type=ref,event=branch
+            type=ref,event= '${{ github.event.inputs.tag }}''
             type=ref,event=pr
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
