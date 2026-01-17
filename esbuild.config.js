@@ -48,7 +48,7 @@ esbuild
     packages: 'bundle',
     inject: [path.resolve(__dirname, 'scripts/esbuild-shims.js')],
     banner: {
-      js: `#!/usr/bin/env node
+      js: `
 // @ts-nocheck
 // Suppress deprecation warnings from legacy dependencies
 process.removeAllListeners('warning');
