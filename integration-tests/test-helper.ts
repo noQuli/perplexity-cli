@@ -147,7 +147,7 @@ export class TestRig {
   _interactiveOutput = '';
 
   constructor() {
-    this.bundlePath = join(__dirname, '..', 'dist/cli.js');
+    this.bundlePath = join(__dirname, '..', 'dist/perplexity.js');
     this.testDir = null;
   }
 

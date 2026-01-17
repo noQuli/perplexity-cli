@@ -54,3 +54,6 @@ packages/vscode-ide-companion/*.vsix
 logs/
 patch_output.log
 gha-creds-*.json
+
+#bin files 
+/bin/*

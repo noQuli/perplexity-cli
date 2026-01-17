@@ -99,7 +99,7 @@ export async function setup() {
 
   // Environment variables for SDK E2E tests
   process.env['E2E_TEST_FILE_DIR'] = sdkE2eRunDir;
-  process.env['TEST_CLI_PATH'] = join(rootDir, 'dist/cli.js');
+  process.env['TEST_CLI_PATH'] = join(rootDir, 'dist/perplexity.js');
 
   // Set a fake API key for tests if not already set
   if (!process.env['PERPLEXITY_API_KEY']) {

@@ -172,7 +172,7 @@ runs:
       shell: 'bash'
       run: |
         gh release create "${{ inputs.release-tag }}" \
-          bundle/perplexity.js \
+          dist/perplexity.js \
           --target "${{ steps.release_branch.outputs.BRANCH_NAME }}" \
           --title "Release ${{ inputs.release-tag }}" \
           --notes-start-tag "${{ inputs.previous-tag }}" \

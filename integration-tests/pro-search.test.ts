@@ -19,7 +19,7 @@ describe('pro_search command integration', () => {
     'packages',
     'cli',
     'dist',
-    'cli.js',
+    'perplexity.js',
   );
 
   it('should be listed in help commands', () => {

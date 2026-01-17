@@ -3,8 +3,8 @@
  *
  * Supports multiple execution modes:
  * 1. Native binary: 'perplexity' (production)
- * 2. Node.js bundle: 'node /path/to/cli.js' (production validation)
- * 3. Bun bundle: 'bun /path/to/cli.js' (alternative runtime)
+ * 2. Node.js bundle: 'node /path/to/perplexity.js' (production validation)
+ * 3. Bun bundle: 'bun /path/to/perplexity.js' (alternative runtime)
  * 4. TypeScript source: 'tsx /path/to/index.ts' (development)
  *
  * Auto-detection locations for native binary:
@@ -82,8 +82,8 @@ export function findNativeCliPath(): string {
       '\n' +
       'For development/testing, you can also use:\n' +
       '  • TypeScript source: query({ pathToPerplexityExecutable: "/path/to/index.ts" })\n' +
-      '  • Node.js bundle: query({ pathToPerplexityExecutable: "/path/to/cli.js" })\n' +
-      '  • Force specific runtime: query({ pathToPerplexityExecutable: "bun:/path/to/cli.js" })',
+      '  • Node.js bundle: query({ pathToPerplexityExecutable: "/path/to/perplexity.js" })\n' +
+      '  • Force specific runtime: query({ pathToPerplexityExecutable: "bun:/path/to/perplexity.js" })',
   );
 }
 
@@ -136,12 +136,12 @@ function validateFileExtensionForRuntime(
  * Supports multiple formats:
  * - 'perplexity' -> native binary (auto-detected)
  * - '/path/to/perplexity' -> native binary (explicit path)
- * - '/path/to/cli.js' -> Node.js bundle (default for .js files)
+ * - '/path/to/perplexity.js' -> Node.js bundle (default for .js files)
  * - '/path/to/index.ts' -> TypeScript source (requires tsx)
  *
  * Advanced runtime specification (for overriding defaults):
- * - 'bun:/path/to/cli.js' -> Force Bun runtime
- * - 'node:/path/to/cli.js' -> Force Node.js runtime
+ * - 'bun:/path/to/perplexity.js' -> Force Bun runtime
+ * - 'node:/path/to/perplexity.js' -> Force Node.js runtime
  * - 'tsx:/path/to/index.ts' -> Force tsx runtime
  * - 'deno:/path/to/cli.ts' -> Force Deno runtime
  *
@@ -168,7 +168,7 @@ export function parseExecutableSpec(executableSpec?: string): {
     };
   }
 
-  // Check for runtime prefix (e.g., 'bun:/path/to/cli.js')
+  // Check for runtime prefix (e.g., 'bun:/path/to/perplexity.js')
   const runtimeMatch = executableSpec.match(/^([^:]+):(.+)$/);
   if (runtimeMatch) {
     const [, runtime, filePath] = runtimeMatch;
@@ -247,7 +247,7 @@ export function parseExecutableSpec(executableSpec?: string): {
         '  • Set PERPLEXITY_CODE_CLI_PATH environment variable\n' +
         '  • Install perplexity globally: npm install -g perplexity\n' +
         '  • For TypeScript files, ensure tsx is installed: npm install -g tsx\n' +
-        '  • Force specific runtime: bun:/path/to/cli.js or tsx:/path/to/index.ts',
+        '  • Force specific runtime: bun:/path/to/perplexity.js or tsx:/path/to/index.ts',
     );
   }
 
