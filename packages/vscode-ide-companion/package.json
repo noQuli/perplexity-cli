@@ -2,7 +2,7 @@
   "name": "perplexity-cli-vscode-ide-companion",
   "displayName": "Perplexity CLI Companion",
   "description": "Enable Perplexity CLI with direct access to your IDE workspace.",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "publisher": "perplexity",
   "icon": "assets/icon.png",
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "@perplexity-cli/sdk",
-  "version": "0.1.0",
+  "version": "0.1.6",
   "description": "TypeScript SDK for programmatic access to perplexity-cli",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
